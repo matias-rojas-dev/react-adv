@@ -1,48 +1,43 @@
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
+  Navigate,
   NavLink,
   Route,
-  Switch,
-  Redirect,
+  Routes,
 } from 'react-router-dom'
-
 import logo from '../logo.svg'
-import { LazyPage1, LazyPage2, LazyPage3 } from '../01-lazyload/pages'
+import { routes } from './routes'
+import { Suspense } from 'react'
 
 export const Navigation = () => {
   return (
-    <Router>
-      <div className="main-layout">
-        <nav>
-          <img src={logo} alt="React Logo" />
-          <ul>
-            <li>
-              <NavLink to="/lazy1" activeClassName="nav-active" exact>
-                Lazy 1
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/lazy2" activeClassName="nav-active" exact>
-                Lazy 2
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/lazy3" activeClassName="nav-active" exact>
-                Lazy 3
-              </NavLink>
-            </li>
-          </ul>
-        </nav>
+    <Suspense fallback={<div>Loading...</div>}>
+      <BrowserRouter>
+        <div className="main-layout">
+          <nav>
+            <img src={logo} alt="React Logo" />
+            <ul>
+              {routes.map(({ path, to, name }) => (
+                <li key={path}>
+                  <NavLink
+                    to={to}
+                    className={({ isActive }) => (isActive ? 'nav-active' : '')}
+                  >
+                    {name}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        {/* Switch para el enrutamiento */}
-        <Switch>
-          <Route path="/lazy1" component={LazyPage1} />
-          <Route path="/lazy2" component={LazyPage2} />
-          <Route path="/lazy3" component={LazyPage3} />
-          {/* Redirect para manejar rutas no encontradas */}
-          <Redirect to="/lazy1" />
-        </Switch>
-      </div>
-    </Router>
+          <Routes>
+            {routes.map(({ path, Component }) => (
+              <Route key={path} path={path} element={<Component />} />
+            ))}
+            <Route path="/*" element={<Navigate to="/lazy1" replace />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </Suspense>
   )
 }
