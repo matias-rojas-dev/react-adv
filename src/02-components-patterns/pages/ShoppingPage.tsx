@@ -3,7 +3,7 @@ import {
   ProductCard,
   ProductImage,
   ProductTitle,
-} from '../components/ProductCard'
+} from '../components/index'
 
 const product = {
   id: '1',
