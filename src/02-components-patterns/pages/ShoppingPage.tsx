@@ -1,17 +1,39 @@
+import { useState } from "react"
 import {
   ProductButtons,
   ProductCard,
   ProductImage,
   ProductTitle,
 } from "../components/index"
+import { Product } from "../interfaces/interface"
 import "../styles/custom-styles.css"
-const product = {
+
+const product1 = {
   id: "1",
-  title: "Coffee Mug - 2",
+  title: "Coffee Mug",
   img: "./coffee-mug.png",
 }
 
+const product2 = {
+  id: "2",
+  title: "Coffee Mug - 22",
+  img: "./coffee-mug2.png",
+}
+
+const products: Product[] = [product1, product2]
+
+interface ProductInCart extends Product {
+  count: number
+}
+
 export const ShoppingPage = () => {
+  const [shoppingCart, setShoppingCart] = useState<{
+    [key: string]: ProductInCart
+  }>({
+    "1": { ...product1, count: 10 },
+    "2": { ...product2, count: 1 },
+  })
+
   return (
     <div>
       <h1>ShoppingPage</h1>
@@ -23,36 +45,46 @@ export const ShoppingPage = () => {
           flexWrap: "wrap",
         }}
       >
-        <ProductCard className="bg-dark text-white" product={product}>
-          <ProductCard.Image className="custom-image" img={product.img} />
-          <ProductCard.Title title="Hola mundo" className="text-white" />
-          <ProductCard.Buttons className="custom-buttons" />
-        </ProductCard>
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            className="bg-dark text-white"
+            product={product}
+          >
+            <ProductImage
+              className="custom-image"
+              style={{ boxShadow: "10px 10px 10px rgba(0, 0, 0, 0.3)" }}
+            />
+            <ProductTitle className="text-white" />
+            <ProductButtons className="custom-buttons" />
+          </ProductCard>
+        ))}
+      </div>
 
-        <ProductCard className="bg-dark text-white" product={product}>
-          <ProductImage className="custom-image" />
+      <div className="shopping-cart">
+        <ProductCard
+          className="bg-dark text-white"
+          product={product1}
+          style={{ width: "100px" }}
+        >
+          <ProductImage
+            className="custom-image"
+            style={{ boxShadow: "10px 10px 10px rgba(0, 0, 0, 0.3)" }}
+          />
           <ProductTitle className="text-white" />
           <ProductButtons className="custom-buttons" />
         </ProductCard>
-
         <ProductCard
-          product={product}
-          style={{
-            backgroundColor: "gray",
-            color: "white",
-          }}
+          className="bg-dark text-white"
+          product={product2}
+          style={{ width: "100px" }}
         >
           <ProductImage
-            style={{
-              borderRadius: "10px",
-              boxShadow: "0px 0px 10px",
-            }}
+            className="custom-image"
+            style={{ boxShadow: "10px 10px 10px rgba(0, 0, 0, 0.3)" }}
           />
-
-          <ProductTitle
-            style={{ color: "blue", textDecoration: "underline" }}
-          />
-          <ProductButtons style={{ color: "red", borderRadius: "10px" }} />
+          <ProductTitle className="text-white" />
+          <ProductButtons className="custom-buttons" />
         </ProductCard>
       </div>
     </div>
