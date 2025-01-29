@@ -48,6 +48,7 @@ export const ShoppingPage = () => {
               boxShadow: "0px 0px 10px",
             }}
           />
+
           <ProductTitle
             style={{ color: "blue", textDecoration: "underline" }}
           />
