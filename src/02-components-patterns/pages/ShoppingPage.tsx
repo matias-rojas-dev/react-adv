@@ -67,6 +67,7 @@ export const ShoppingPage = () => {
             key={product.id}
             className="bg-dark text-white"
             product={product}
+            value={shoppingCart[product.id]?.count || 0}
             onChange={onProductCountChange}
             // Esto igual es válido -> onChange={(event) => onProductCountChange(event)}
           >
@@ -81,19 +82,51 @@ export const ShoppingPage = () => {
       </div>
 
       <div className="shopping-cart">
-        <ProductCard
-          className="bg-dark text-white"
-          product={product1}
-          style={{ width: "100px" }}
-        >
-          <ProductImage
-            className="custom-image"
-            style={{ boxShadow: "10px 10px 10px rgba(0, 0, 0, 0.3)" }}
-          />
-          <ProductTitle className="text-white" />
-          <ProductButtons className="custom-buttons" />
-        </ProductCard>
-        <ProductCard
+        {Object.keys(shoppingCart).map((key) => {
+          const product = shoppingCart[key]
+          return (
+            <ProductCard
+              key={key}
+              className="bg-dark text-white"
+              product={product}
+              style={{ width: "100px" }}
+              value={product.count}
+              onChange={onProductCountChange}
+            >
+              <ProductImage
+                className="custom-image"
+                style={{ boxShadow: "10px 10px 10px rgba(0, 0, 0, 0.3)" }}
+              />
+              <ProductButtons
+                className="custom-buttons"
+                style={{ display: "flex", justifyContent: "center" }}
+              />
+            </ProductCard>
+          )
+        })}
+
+        {/* // OTRA OPCIÓN
+        <div className="shopping-cart">
+          {Object.entries(shoppingCart).map(([key, product]) => (
+            <ProductCard
+              key={key}
+              className="bg-dark text-white"
+              product={product}
+              style={{ width: "100px" }}
+            >
+              <ProductImage
+                className="custom-image"
+                style={{ boxShadow: "10px 10px 10px rgba(0, 0, 0, 0.3)" }}
+              />
+              <ProductTitle className="text-white" />
+              <ProductButtons
+                className="custom-buttons"
+                style={{ display: "flex", justifyContent: "center" }}
+              />
+            </ProductCard>
+          ))}
+        </div> */}
+        {/* <ProductCard
           className="bg-dark text-white"
           product={product2}
           style={{ width: "100px" }}
@@ -104,10 +137,7 @@ export const ShoppingPage = () => {
           />
           <ProductTitle className="text-white" />
           <ProductButtons className="custom-buttons" />
-        </ProductCard>
-      </div>
-      <div>
-        <code>{JSON.stringify(shoppingCart, null, 2)}</code>
+        </ProductCard> */}
       </div>
     </div>
   )
