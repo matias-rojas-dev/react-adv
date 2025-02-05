@@ -19,7 +19,15 @@ export const useProduct = ({
   const isMounted = useRef(false)
 
   const increaseBy = (value: number) => {
-    const newValue = Math.max(counter + value, 0)
+    // Solución propia
+    // if (initialValues?.maxCount && counter + value > initialValues.maxCount)
+    //   return
+
+    // Solución de FH
+    let newValue = Math.max(counter + value, 0)
+    if (initialValues?.maxCount) {
+      newValue = Math.min(newValue, initialValues.maxCount)
+    }
     setCounter(newValue)
 
     onChange &&
@@ -33,6 +41,10 @@ export const useProduct = ({
     if (!isMounted.current) return
     setCounter(value)
   }, [value])
+
+  useEffect(() => {
+    isMounted.current = true
+  }, [])
 
   return {
     counter,
