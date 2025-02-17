@@ -8,6 +8,7 @@ import {
   ProductContextProps,
 } from "../interfaces/interface"
 import { ProductButtons, ProductImage, ProductTitle } from "./index"
+
 export const ProductContext = createContext({
   counter: 0,
   increaseBy: (value: number) => {},
@@ -36,7 +37,7 @@ export const ProductCard = ({
   value,
   initialValues,
 }: Props) => {
-  const { counter, increaseBy } = useProduct({
+  const { counter, increaseBy, maxCount } = useProduct({
     product,
     onChange,
     value,
@@ -44,7 +45,7 @@ export const ProductCard = ({
   })
 
   return (
-    <Provider value={{ counter, increaseBy, product }}>
+    <Provider value={{ counter, increaseBy, product, maxCount }}>
       <div className={`${styles.productCard} ${className} `} style={style}>
         {children("hola mundo")}
       </div>
