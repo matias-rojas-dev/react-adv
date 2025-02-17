@@ -23,7 +23,7 @@ export const ShoppingPage = () => {
         className="bg-dark text-white"
         product={product}
       >
-        {(msg) => (
+        {({ reset }) => (
           <>
             <ProductImage
               className="custom-image"
@@ -31,7 +31,7 @@ export const ShoppingPage = () => {
             />
             <ProductTitle className="text-white" />
             <ProductButtons className="custom-buttons" />
-            <h4>{msg}</h4>
+            <button onClick={reset}>Reset</button>
           </>
         )}
       </ProductCard>
