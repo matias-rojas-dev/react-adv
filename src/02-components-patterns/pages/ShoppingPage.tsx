@@ -23,12 +23,17 @@ export const ShoppingPage = () => {
         className="bg-dark text-white"
         product={product}
       >
-        <ProductImage
-          className="custom-image"
-          style={{ boxShadow: "10px 10px 10px rgba(0, 0, 0, 0.3)" }}
-        />
-        <ProductTitle className="text-white" />
-        <ProductButtons className="custom-buttons" />
+        {(msg) => (
+          <>
+            <ProductImage
+              className="custom-image"
+              style={{ boxShadow: "10px 10px 10px rgba(0, 0, 0, 0.3)" }}
+            />
+            <ProductTitle className="text-white" />
+            <ProductButtons className="custom-buttons" />
+            <h4>{msg}</h4>
+          </>
+        )}
       </ProductCard>
     </div>
   )
